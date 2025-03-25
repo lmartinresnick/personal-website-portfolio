@@ -22,8 +22,8 @@ const HomePage = () => {
                         currently working at <a href="https://santasailab.com/" className="highlight">santa's ai lab</a> as a founding engineer.
                     </p>
                     <div className="cta-buttons">
-                        <button className="primary-button" onClick={() => handleNavClick(RouteEnum.PROJECTS)}>
-                            view projects
+                        <button className="primary-button" onClick={() => handleNavClick(RouteEnum.ABOUT)}>
+                            view work history
                         </button>
                         <button className="secondary-button" onClick={() => handleNavClick(RouteEnum.CONTACT)}>
                             contact me
