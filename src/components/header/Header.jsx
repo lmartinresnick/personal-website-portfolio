@@ -35,14 +35,14 @@ const Header = () => {
                                 about
                             </button>
                         </li>
-                        <li>
+                        {/* <li>
                             <button
                                 className={activeSection === RouteEnum.PROJECTS ? 'active' : ''}
                                 onClick={() => handleNavClick(RouteEnum.PROJECTS)}
                             >
                                 projects
                             </button>
-                        </li>
+                        </li> */}
                         <li>
                             <button
                                 className={activeSection === RouteEnum.CONTACT ? 'active' : ''}
