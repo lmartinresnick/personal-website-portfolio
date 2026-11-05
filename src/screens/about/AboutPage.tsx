@@ -1,40 +1,13 @@
-import { useState, useEffect } from 'react';
-import './AboutPage.css';
 import {
     bioParagraphs,
     skillsData,
-    experienceData as initialExperienceData,
-    contractExperienceData as initialContractExperienceData,
-    sectionTitles,
-    initializeWithLinkPreviews
+    experienceData,
+    contractExperienceData,
+    sectionTitles
 } from '../../utils/AboutSectionDatasource';
 
 const AboutPage = () => {
-    const [experienceData, setExperienceData] = useState(initialExperienceData);
-    const [contractExperienceData, setContractExperienceData] = useState(initialContractExperienceData);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        async function loadLinkPreviews() {
-            setLoading(true);
-            try {
-                const { experienceData: updatedExperience, contractExperienceData: updatedContract } =
-                    await initializeWithLinkPreviews();
-
-                setExperienceData(updatedExperience);
-                setContractExperienceData(updatedContract);
-            } catch (error) {
-                console.error('Failed to load link previews:', error);
-                // On error, keep using the initial data
-                setExperienceData(initialExperienceData);
-                setContractExperienceData(initialContractExperienceData);
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        loadLinkPreviews();
-    }, []);
+    const loading = false;
 
     return (
         <main className="main">
@@ -74,15 +47,15 @@ const AboutPage = () => {
                                                     >
                                                         {!loading && (
                                                             <>
-                                                                <img
-                                                                    src={link.preview?.image || link.image}
-                                                                    alt={link.preview?.title || link.text}
+                                                                {link.preview?.image.startsWith('https://') && <img
+                                                                    src={link.preview?.image}
+                                                                    alt={link.title}
                                                                     className="preview-image"
-                                                                />
+                                                                />}
                                                                 <div className="job-link-overlay">
                                                                     <div className="preview-content">
                                                                         <h6 className="preview-title">
-                                                                            {link.preview?.title || link.text}
+                                                                            {link.title}
                                                                         </h6>
                                                                     </div>
                                                                     <span className="link-icon">↗</span>
@@ -128,15 +101,15 @@ const AboutPage = () => {
                                                     >
                                                         {!loading && (
                                                             <>
-                                                                <img
-                                                                    src={link.preview?.image || link.image}
-                                                                    alt={link.preview?.title || link.text}
+                                                                {link.preview?.image.startsWith('https://') && <img
+                                                                    src={link.preview?.image}
+                                                                    alt={link.title}
                                                                     className="preview-image"
-                                                                />
+                                                                />}
                                                                 <div className="job-link-overlay">
                                                                     <div className="preview-content">
                                                                         <h6 className="preview-title">
-                                                                            {link.preview?.title || link.text}
+                                                                            {link.title}
                                                                         </h6>
                                                                     </div>
                                                                     <span className="link-icon">↗</span>

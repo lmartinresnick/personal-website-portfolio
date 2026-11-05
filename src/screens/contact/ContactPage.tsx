@@ -1,4 +1,3 @@
-import './ContactPage.css';
 
 const ContactPage = () => {
     return (
@@ -45,7 +44,7 @@ const ContactPage = () => {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="message">message</label>
-                                <textarea id="message" name="message" rows="5" required></textarea>
+                                <textarea id="message" name="message" rows={5} required></textarea>
                             </div>
                             <button type="submit" className="submit-button">send message</button>
                         </form>

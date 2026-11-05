@@ -1,4 +1,3 @@
-import './ProjectsPage.css';
 
 const ProjectsPage = () => {
     return (

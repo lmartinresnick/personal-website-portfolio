@@ -1,7 +1,19 @@
 // About section data source
 // Contains structured data for the About page content
 
-import { getLinkPreview } from './linkPreview';
+export interface ExperienceLink {
+    title: string;
+    url: string;
+    preview?: { title: string; description: string; image: string };
+}
+
+export interface Experience {
+    title: string;
+    company: string;
+    period: string;
+    description: string[];
+    links?: ExperienceLink[];
+}
 
 // Bio paragraphs
 export const bioParagraphs = [
@@ -18,7 +30,7 @@ export const skillsData = {
 };
 
 // Work experience data as an array for easy iteration
-export const experienceData = [
+export const experienceData: Experience[] = [
     {
         title: "founding engineer, ios & full-stack",
         company: "santa's ai lab",
@@ -117,7 +129,7 @@ export const experienceData = [
     }
 ];
 
-export const contractExperienceData = [
+export const contractExperienceData: Experience[] = [
     {
         title: "iOS & full-stack engineer, specialized in ios",
         company: "brem llc",
@@ -193,61 +205,3 @@ export const sectionTitles = {
     experience: "work experience",
     contractExperience: "contract experience"
 };
-
-const CACHE_KEY = 'link-previews-cache';
-const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours
-
-export async function initializeWithLinkPreviews() {
-    // Check cache first
-    const cache = localStorage.getItem(CACHE_KEY);
-    if (cache) {
-        const { timestamp, data } = JSON.parse(cache);
-        if (Date.now() - timestamp < CACHE_DURATION) {
-            return data;
-        }
-    }
-
-    // Create deep copies of the data
-    const updatedExperienceData = JSON.parse(JSON.stringify(experienceData));
-    const updatedContractExperienceData = JSON.parse(JSON.stringify(contractExperienceData));
-
-    // Helper function to fetch previews for job links
-    async function updateJobLinks(job) {
-        if (job.links && job.links.length > 0) {
-            for (const link of job.links) {
-                try {
-                    const preview = await getLinkPreview(link.url);
-                    if (preview) {
-                        link.preview = preview;
-                    }
-                } catch (error) {
-                    console.error(`Failed to fetch preview for ${link.url}:`, error);
-                }
-            }
-        }
-        return job;
-    }
-
-    // Update all job links with previews
-    for (let i = 0; i < updatedExperienceData.length; i++) {
-        updatedExperienceData[i] = await updateJobLinks(updatedExperienceData[i]);
-    }
-
-    for (let i = 0; i < updatedContractExperienceData.length; i++) {
-        updatedContractExperienceData[i] = await updateJobLinks(updatedContractExperienceData[i]);
-    }
-
-    // Save to cache
-    localStorage.setItem(CACHE_KEY, JSON.stringify({
-        timestamp: Date.now(),
-        data: {
-            experienceData: updatedExperienceData,
-            contractExperienceData: updatedContractExperienceData
-        }
-    }));
-
-    return {
-        experienceData: updatedExperienceData,
-        contractExperienceData: updatedContractExperienceData
-    };
-}
