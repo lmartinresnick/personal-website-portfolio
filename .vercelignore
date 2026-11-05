@@ -1,0 +1,11 @@
+# Local design references, not part of the portfolio.
+public/assets/
+public/raffi-template.html
+public/style.css
+
+# Firebase and generated output are not Vercel deployment inputs.
+.firebase/
+.firebaserc
+firebase.json
+out/
+build/
